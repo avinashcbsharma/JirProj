@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmployeeManagmentSystem</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background-origin: padding-box;
+            box-sizing: border-box;
+        }
+        .fnt{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #heading{
+            text-align: center;
+
+        }
+        #main{
+            display: flex;
+            margin-top: 20px;
+
+            justify-content: space-around;
+            /* align-items: center; */
+        }
+        .cont{
+            height: 400px;
+            width: 350px;
+            border:1px solid gray;
+            border-radius: 5px;
+            background-color: rgb(208, 240, 241);
+            padding-left: 2% ;
+            box-shadow: -2px -2px rgb(210, 123, 146);
+            overflow : scroll;
+
+        }
+        #btn1{
+            padding: 0.6rem;
+            margin-top: 10px;
+            border-radius: 5px;
+            box-shadow: 1px 2px rgba(0,0,0,0.7);
+            border: none;
+        }
+        #btn1:{            
+            border: 1px solid bisque;
+            background-color: darksalmon;
+            border-radius: 5%;
+            color: lightgoldenrodyellow;
+        }
+        .task{
+            overflow: hidden;
+            max-width: 300px;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1 id="heading" class="fnt">Employee Management System</h1>
+
+    <div id="main" class="container fnt">
+        <h3 id="Addjob">Add Job<br>
+            <button id="btn1">+Card</button>
+        </h3>
+        
+        <div id="Todo" class="cont"><h4>Todo List</h4></b></div>
+        <div id="Inprogress" class="cont"><h4>In-Progress</h4></div>
+        <div id="Done" class="cont"><h4>Done-Completed</h4></div>
+    
+    </div>
+    <script>
+        let Todocontainer = document.querySelector("#Todo");
+        let Addbutton = document.getElementById("btn1");
+
+        // creating new card and adding in Todo list
+        Addbutton.addEventListener("click",() => {
+            let card = document.createElement("div")
+            card.className = 'task';                
+            card.innerHTML = " click & fill Task here ";            
+            card.contentEditable = "true";
+            Todocontainer.append(card);
+            card.focus();
+            
+            // creating and adding status selector in each inserted card.            
+            const selector = document.createElement("select");      //creating select tag.            
+            selector.innerHTML=(`
+            <option value="Todo">To do</option>
+            <option value="Inprogress">In-progress</option>
+            <option value="Done">Completed</option>`);
+            card.append(selector);
+            
+            //getting tast status and move task to appropriate container
+            selector.addEventListener('change',(eventDetails) =>{
+                const status = eventDetails.target.value;                
+                let curCard = document.getElementById(status);
+                curCard.append(card);
+
+            })
+            card.addEventListener("blur",(eventDetails) =>{
+                let targ = eventDetails.target;                
+                console.log("Second: ", !targ.innerHTML.trim());
+                const rmv = !targ.innerHTML.trim()
+                console.log("rmv: ",rmv);
+                if(rmv) {                   
+                    console.log("Else");                   
+                    targ.remove();
+                }
+            });
+        }); 
+    </script>
+        
+</body>
+</html>
